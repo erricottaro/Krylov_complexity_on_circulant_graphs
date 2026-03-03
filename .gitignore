@@ -1,3 +1,6 @@
 token.txt
 tester.py
 testing.py
+analysis.ipynb
+newalg_benchmarking.ipynb
+__pycache__/
