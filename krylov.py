@@ -1,4 +1,5 @@
 import numpy as np
+from krypy.utils import arnoldi
 import sys
 
 #computes Hilbert product between to vectors in the Hilbert space
@@ -133,8 +134,11 @@ def compl_inf_time(H_Kryl):
     return complexity
 
 def get_complexity(H, psi_0):
+    #convert psi_0 to accepted format
+    psi_0 = np.array([psi_0], dtype=complex)
+    psi_0 = psi_0.T
     try:
-        base, new_H = lanczos(H, psi_0)
+        base, new_H = arnoldi(H, psi_0, ortho='dmgs')
     except ValueError as e:
         print(e)
     
