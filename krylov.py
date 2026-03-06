@@ -63,6 +63,11 @@ def lanczos(H, psi_0):
 
         #Lanczos step
         Kryl[i+1] = H@Kryl[i].copy() - a[i]*Kryl[i].copy() -b[i]*Kryl[i-1].copy()
+        #let's try some attempt of "reorthogonalization"
+        for j in range(i+1):
+            overlap = hil_prod(Kryl[j], Kryl[i+1])
+            Kryl[i+1] -= overlap * Kryl[j]
+        
         b[i+1] = np.sqrt(hil_prod(Kryl[i+1], Kryl[i+1]))
         #print("b[",i+1,"]:", b[i+1])
 
