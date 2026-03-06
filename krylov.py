@@ -51,7 +51,7 @@ def lanczos(H, psi_0):
     i = int(1)
 
     #set threshold to avoid problems due to rounding errors. If b is less then such threshold, the algorithm stops (absolutely arbitrary)
-    threshold = 1e-3
+    threshold = 1e-6
 
     #If current_b is compatible with 0, then halt the algorithm, otherwise go on
     while(b[i].real > threshold and i<dimHilbert):
