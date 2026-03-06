@@ -30,16 +30,16 @@ def lanczos(H, psi_0):
     dimKrylov = int(0)
 
     #Lanczos coefficients
-    a = np.ndarray(dimHilbert+1, dtype=complex)
-    b = np.ndarray(dimHilbert+1, dtype=complex)
+    a = np.ndarray(dimHilbert+1, dtype=np.complex256)
+    b = np.ndarray(dimHilbert+1, dtype=np.complex256)
 
     #Krylov base
-    Kryl = np.ndarray(shape=(dimHilbert+1, dimHilbert), dtype=complex)
+    Kryl = np.ndarray(shape=(dimHilbert+1, dimHilbert), dtype=np.complex256)
     Kryl[0] = psi_0.copy()
     #print("0th Krylov element:", Kryl[0])
 
     #initalization
-    b[0]=0
+    b[0]=np.complex256(0.)
     a[0]=hil_prod(Kryl[0], H@Kryl[0])
     #print("Average energy:",a[0])
     
@@ -80,7 +80,7 @@ def lanczos(H, psi_0):
     #print("Krylov base:", Kryl)
 
     #construction of Hamiltonian in Krylov base
-    H_Kryl = np.zeros(shape=(dimKrylov,dimKrylov), dtype=float)
+    H_Kryl = np.zeros(shape=(dimKrylov,dimKrylov), dtype=np.complex256)
     #set transition energies
     temp = b[1:].real
     H_Kryl = np.diag(temp,1)
@@ -134,12 +134,12 @@ def compl_inf_time(H_Kryl):
 
 def get_complexity(H, psi_0):
     try:
-        base, new_H = lanczos(H, psi_0)
+        base, new_H = lanczos(H.astype(np.complex256), psi_0.astype(np.complex256))
     except ValueError as e:
         print(e)
     
     try:
-        compl = compl_inf_time(new_H)
+        compl = compl_inf_time(new_H.astype(np.complex128))
     except ValueError as e:
         print(e)
 
