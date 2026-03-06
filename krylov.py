@@ -113,7 +113,7 @@ def compl_inf_time(H_Kryl):
     #    temp = psi[i,:]
     #    print(hil_prod(temp, temp))
 
-    kappa = np.zeros(dim)
+    kappa = np.zeros(dim, dtype=complex)
 
     for i in range(dim):
         for j in range(dim):
