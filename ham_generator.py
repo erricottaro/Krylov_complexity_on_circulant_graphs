@@ -53,14 +53,6 @@ def Anderson_H(dim, W):
 
     return H
 
-#returns a qubit in a given state on the Bloch sphere according to Haar parametrization (doesn't make sense to put here)
-def qubit(theta, phi):
-    c = np.cos(theta/2.)
-    s = np.sin(theta/2.)
-    phase = np.exp(phi*1.j)
-    state = np.array([c,s*phase])
-    return state
-
 #Functions to return a circulant hermitian matrix 
 
 #shift matrix (unitary representation of Z_n group)
