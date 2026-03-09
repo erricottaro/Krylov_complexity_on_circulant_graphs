@@ -1,6 +1,7 @@
 #include "triangle.h"
 #include <iostream>
 #include <fstream>
+#include <iomanip>
 
 using namespace std;
 
@@ -9,24 +10,46 @@ int main(){
     //cout << I << endl;
 
     double theta_max = M_PI;
-    int n_theta = 10;
+    int n_theta = 1000;
 
     double phi_max = 2*M_PI;
-    int n_phi = 10;
+    int n_phi = 1000;
 
     double delta_theta = theta_max/n_theta;
     double delta_phi = phi_max/n_phi;
 
+    ofstream output;
+
+    output.open("../output/output.out");
+
+    output << setw(20) << "theta1" << setw(20) << "phi1" << setw(20) << "theta2" << setw(20) << "phi2" << endl;
+
     for(int i=0; i<n_theta; i++){
-        double theta = i*delta_theta;
-        cout << i << endl;
-        for(int j=0; i<n_phi; j++){
-            double phi = j*delta_phi;
-            cout << j << endl;
-            //double complexity = c_bar(theta, phi);
+        double theta1 = i*delta_theta;
+        for(int j=0; j<n_phi; j++){
+            double phi1 = j*delta_phi;
+            c_bar(theta1, phi1);
+            output << setw(20) << theta1 << setw(20) << phi1 << setw(20) << 0. << setw(20) << 0. << endl;
         }
-        //double c = c_bar(theta, M_PI/2.);
     }
+    /*
+    for(int i=0; i<n_theta; i++){
+        double theta1 = i*delta_theta;
+        for(int j=0; j<n_phi; j++){
+            double phi1 = j*delta_phi;
+            for(int k=0; k<n_theta; k++){
+                double theta2 = k*delta_theta;
+                for(int l=0; l<n_phi; l++){
+                    double phi2 = l*delta_phi;
+                    c_bar(theta1, phi1, theta2, phi2);
+                    output << setw(20) << theta1 << setw(20) << phi1 << setw(20) << theta2 << setw(20) << phi2 << endl;
+                }
+            }
+        }
+    }
+    */
+
+    output.close();
 
     return 0;
 }

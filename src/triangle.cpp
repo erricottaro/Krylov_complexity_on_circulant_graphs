@@ -57,6 +57,6 @@ double c_bar(double theta1, double phi1, double theta2, double phi2){
     double first = pow(norm(c_0(theta1, phi1, theta2, phi2))*(2.-a_0(theta1, phi1, theta2, phi2)), 2);
     double second = pow(norm(c_plus(theta1, phi1, theta2, phi2))*(1.+a_0(theta1, phi1, theta2, phi2)), 2);
 
-    return den*(first + second);
+    return den*(first + second);    
 }
 
