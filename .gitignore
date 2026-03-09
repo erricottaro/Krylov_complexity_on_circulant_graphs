@@ -5,6 +5,4 @@ krylov_gabri_version.py
 krylov_gmpy2.py
 analysis.ipynb
 newalg_benchmarking.ipynb
-src/*.o
-src/*.x
 __pycache__/
