@@ -10,10 +10,10 @@ int main(){
     //cout << I << endl;
 
     double theta_max = M_PI;
-    int n_theta = 100;
+    int n_theta = 50;
 
     double phi_max = 2*M_PI;
-    int n_phi = 100;
+    int n_phi = 50;
 
     double delta_theta = theta_max/n_theta;
     double delta_phi = phi_max/n_phi;
