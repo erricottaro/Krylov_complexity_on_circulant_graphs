@@ -9,5 +9,5 @@ main.x: main.o triangle.o
 	$(CC) -c $< -o $@ $(CFLAGS)
 
 clean:
-	rm *.o
+	rm *.o *.x
 
