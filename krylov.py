@@ -45,6 +45,7 @@ def lanczos(H, psi_0):
 
     #Now that H is in proper form, use Hessenberg form to compute Hamiltonian in Krylov base
 
+    H_Hess = np.zeros((dimHilbert,dimHilbert), dtype=np.complex256)
     H_Hess = hessenberg(H)
 
     #Lanczos coefficients
@@ -53,7 +54,7 @@ def lanczos(H, psi_0):
     #print("as=",a)
     #print("bs=",b)
 
-    threshold = 1e-6
+    threshold = 1e-10
 
     for bi in b:
         if bi < threshold:
