@@ -1,4 +1,5 @@
 import numpy as np
+from scipy.linalg import hessenberg
 import sys
 
 #computes Hilbert product between to vectors in the Hilbert space
@@ -27,8 +28,47 @@ def lanczos(H, psi_0):
     psi_0 /= norm
 
     dimHilbert = psi_0.size
-    dimKrylov = int(0)
+    dimKrylov = int(1)
 
+    #Rotate the base using Householder reflection such that psi_0 is vector (1,0,0,0,...)
+    one_zeros = np.zeros_like(psi_0)
+    one_zeros[0] = 1.+0.j
+
+    diff = psi_0 - one_zeros
+    diff_norm = np.sqrt(hil_prod(diff,diff))
+    
+    if(diff_norm != 0):
+        #Householder matrix
+        diff /= diff_norm
+        House = np.identity(dimHilbert) -2.*np.outer(diff, diff)
+        H = House@H@House
+
+    #Now that H is in proper form, use Hessenberg form to compute Hamiltonian in Krylov base
+
+    H_Hess = hessenberg(H)
+
+    #Lanczos coefficients
+    a = np.diag(H_Hess, k=0).copy()
+    b = abs(np.diag(H_Hess, k=1)).copy() #take absolute value because the algorithm sometimes returns negative values
+    #print("as=",a)
+    #print("bs=",b)
+
+    threshold = 1e-10
+
+    for bi in b:
+        if bi < threshold:
+            break
+        dimKrylov += 1
+
+    a.resize(dimKrylov)
+    b.resize(dimKrylov)
+
+    temp = b[:-1]
+
+    H_Kryl = np.diag(a.real, k=0) + np.diag(temp, k=1) + np.diag(temp, k=-1)
+
+    #Find first b_n = 0 and reshape H_kryl
+    '''
     #Lanczos coefficients
     a = np.ndarray(dimHilbert+1, dtype=np.complex256)
     b = np.ndarray(dimHilbert+1, dtype=np.complex256)
@@ -89,9 +129,9 @@ def lanczos(H, psi_0):
     H_Kryl = H_Kryl + np.conj(H_Kryl.T)
     #set onsite energies
     np.fill_diagonal(H_Kryl, val=a.real)
-    
+    '''
 
-    return Kryl, H_Kryl
+    return H_Kryl
 
 #given an hamiltonian (already assumed to be expressed in Krylov basis) returns the time-averaged complexity at infinite time
 def compl_inf_time(H_Kryl):
@@ -135,7 +175,7 @@ def compl_inf_time(H_Kryl):
 
 def get_complexity(H, psi_0):
     try:
-        base, new_H = lanczos(H.astype(np.complex256), psi_0.astype(np.complex256))
+        new_H = lanczos(H.astype(np.complex256), psi_0.astype(np.complex256))
     except ValueError as e:
         print(e)
     
