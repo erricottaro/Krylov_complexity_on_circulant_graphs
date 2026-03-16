@@ -24,6 +24,19 @@ int main(){
     double delta_theta2 = theta_max/n_theta2;
     double delta_phi2 = phi_max/n_phi2;
 
+    ofstream params;
+
+    params.open("../output/params.out");
+
+    params << "Theta_max: " << theta_max << endl
+           << "Phi_max: " << phi_max << endl
+           << "n_theta1: " << n_theta1 << endl
+           << "n_theta2: " << n_theta2 << endl
+           << "n_phi1: " << n_phi1 << endl
+           << "n_phi2: " << n_phi2 << endl;
+
+    params.close();
+    
     ofstream output;
 
     output.open("../output/output.out");
