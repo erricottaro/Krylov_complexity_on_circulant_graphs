@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = -O3 --std=c++11
+CFLAGS = -O3 --std=c++23
 HEADERS = triangle.h
 
 main.x: main.o triangle.o
