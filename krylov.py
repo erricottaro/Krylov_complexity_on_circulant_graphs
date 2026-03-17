@@ -54,7 +54,7 @@ def lanczos(H, psi_0):
     #print("as=",a)
     #print("bs=",b)
 
-    threshold = 1e-8
+    threshold = 1e-6
 
     for bi in b:
         if bi < threshold:
