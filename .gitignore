@@ -1,10 +1,7 @@
 token.txt
-tester.py
-testing.py
 krylov_gabri_version.py
 krylov_gmpy2.py
 analysis.ipynb
-newalg_benchmarking.ipynb
 output/output.out
 output/params.out
 src/*.o

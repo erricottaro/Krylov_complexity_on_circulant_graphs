@@ -7,7 +7,7 @@ def hil_prod(a,b):
     return np.dot(np.conj(a),b)
 
 #given an hamiltonian H and an initial state psi_0, computes the lanczos coefficients and returns the Krylov basis and Hamiltonian in it
-def lanczos(H, psi_0):
+def lanczos(H, psi_0, threshold):
     #check compatibility of dimensions
     if(H.ndim != 2):
         raise ValueError("H must be a matrix")
@@ -53,8 +53,6 @@ def lanczos(H, psi_0):
     b = abs(np.diag(H_Hess, k=1)).copy() #take absolute value because the algorithm sometimes returns negative values
     #print("as=",a)
     #print("bs=",b)
-
-    threshold = 1e-6
 
     for bi in b:
         if bi < threshold:
@@ -174,9 +172,9 @@ def compl_inf_time(H_Kryl):
     complexity = np.sum(weights*kappa)
     return complexity
 
-def get_complexity(H, psi_0):
+def get_complexity(H, psi_0, threshold):
     try:
-        new_H = lanczos(H.astype(np.complex256), psi_0.astype(np.complex256))
+        new_H = lanczos(H.astype(np.complex256), psi_0.astype(np.complex256), threshold)
     except ValueError as e:
         print(e)
     
