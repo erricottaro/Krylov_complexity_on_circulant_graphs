@@ -10,18 +10,18 @@ def qubit(theta, phi):
 
 #returns a qubit given cartesian coordinates on a CP1
 def qubit_XYZ(x):
-    theta = np.ndarray(x.shape[0])
+    theta = np.ndarray(x.shape[0], dtype=float)
     phi = np.ndarray(x.shape[0])
 
     z0 = x[:,0]
     z1 = x[:,1]
 
-    theta = 2*np.arccos(z0)
+    theta = 2*np.arccos(abs(z0))
     phi = np.angle(z1)
 
-    state = qubit(theta, phi)
+    #state = qubit(theta, phi)
 
-    return state
+    return theta, phi
 
 #Returns a qutrit according to Haar parametrization
 def qutrit(theta1, theta2, phi1, phi2):
@@ -63,7 +63,8 @@ def qutrit_XYZ(x):
     phi1 = np.angle(z1)
     phi2 = np.angle(z2)
 
-    state = qutrit(theta1, theta2, phi1, phi2)
+    #state = qutrit(theta1, theta2, phi1, phi2)
 
-    return state
+    return theta1, theta2, phi1, phi2
+
 
