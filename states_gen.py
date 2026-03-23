@@ -24,20 +24,13 @@ def qubit_XYZ(x):
     return state
 
 #Returns a qutrit according to Haar parametrization
-def qutrit(thetas, phis):
-    #rotation angles
-    th1 = thetas[:,0]
-    th2 = thetas[:,1]
-    #complex phases
-    phi1 = phis[:,0]
-    phi2 = phis[:,1]
-
+def qutrit(theta1, theta2, phi1, phi2):
     #cosines and sines
-    c1 = np.cos(th1/2.)
-    s1 = np.sin(th1/2.)
+    c1 = np.cos(theta1/2.)
+    s1 = np.sin(theta1/2.)
 
-    c2 = np.cos(th2/2.)
-    s2 = np.sin(th2/2.)
+    c2 = np.cos(theta2/2.)
+    s2 = np.sin(theta2/2.)
 
     #phases
     phase1 = np.exp(phi1*1.j)
@@ -53,10 +46,24 @@ def qutrit(thetas, phis):
 
     return state
 
-#returns a qutrit given cartesian coordinates on a S5/S1
+#returns a qutrit given cartesian coordinates on CP2
 def qutrit_XYZ(x):
     theta1 = np.ndarray(x.shape[0])
     theta2 = np.ndarray(x.shape[0])
     phi1 = np.ndarray(x.shape[0])
     phi2 = np.ndarray(x.shape[0])
+
+    z0=x[:,0]
+    z1=x[:,1]
+    z2=x[:,2]
+
+    theta1 = 2*np.arccos(z0)
+    theta2 = 2*np.arctan(abs(z2), abs(z1))
+
+    phi1 = np.angle(z1)
+    phi2 = np.angle(z2)
+
+    state = qutrit(theta1, theta2, phi1, phi2)
+
+    return state
 
