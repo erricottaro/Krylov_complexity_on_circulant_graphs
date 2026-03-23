@@ -1,11 +1,27 @@
 import numpy as np
 
-#returns a qubit in a given state on the Bloch sphere according to Haar parametrization (doesn't make sense to put here)
+#returns a qubit in a given state on the Bloch sphere according to Haar parametrization
 def qubit(theta, phi):
     c = np.cos(theta/2.)
     s = np.sin(theta/2.)
     phase = np.exp(phi*1.j)
     state = np.array([c,s*phase])
+    return state
+
+#returns a qubit given a 3D point on a sphere
+def qubit_XYZ(x):
+    theta = np.ndarray(x.shape[0])
+    phi = np.ndarray(x.shape[0])
+
+    x1 = x[:,1]
+    x2 = x[:,2]
+    x3 = x[:,3]
+
+    theta = np.acos(x3)
+    phi = np.atan2(x2, x1)
+
+    state = qubit(theta, phi)
+
     return state
 
 #Returns a qutrit according to Haar parametrization
