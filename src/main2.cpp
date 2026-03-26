@@ -9,17 +9,26 @@
 using namespace std;
 
 //generate a random qu-dit and save it inside vec using generator gen
-void random_qudit(arma::cx_vec, default_random_engine);
+void random_qudit(arma::cx_vec&, default_random_engine);
 
 int main(){
     default_random_engine gen;
 
-    arma::cx_vec z(3);
+    int dim = 3;
+    arma::cx_vec z(dim);
 
+    random_qudit(z, gen);
+
+    cout << "Complex vector in CP^" << dim << endl;
+    for (int i = 0; i < dim; i++) {
+        cout << setprecision(3) << z[i] << endl;
+    }
+    cout << "Norm: " << arma::norm(z) << endl;
+    
     return 0;
 }
 
-void random_qudit(arma::cx_vec vec, default_random_engine gen){
+void random_qudit(arma::cx_vec &vec, default_random_engine gen){
 
     int dim = vec.size();
 
@@ -28,7 +37,7 @@ void random_qudit(arma::cx_vec vec, default_random_engine gen){
 
     double norm=0;
 
-    normal_distribution<double> distr;
+    normal_distribution<double> distr(0., 1.);
 
     //generate complex numbers according to multivariate functions
     for (int i = 0; i < dim; i++) {
@@ -36,13 +45,13 @@ void random_qudit(arma::cx_vec vec, default_random_engine gen){
         rand_real = distr(gen);
         rand_im   = distr(gen);
 
-        vec[i] = rand_real + rand_im*I;
+        vec[i] = rand_real + rand_im*I;;
 
         norm += rand_real*rand_real + rand_im*rand_im;
     }
-
+    
     //renormalize
-    vec /= norm;
+    vec /= sqrt(norm);
 
     //compute global phase
     complex<double> v0 = vec[0];
