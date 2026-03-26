@@ -11,6 +11,9 @@ using namespace std;
 //generate a random qu-dit and save it inside vec using generator gen
 void random_qudit(arma::cx_vec&, default_random_engine);
 
+//angle-phase coordinates of qutrit in angles expressed in cartesian coordinates in cart 
+void qutrit_XYZ(arma::vec&, arma::cx_vec);
+
 int main(){
     default_random_engine gen;
 
@@ -19,12 +22,18 @@ int main(){
 
     random_qudit(z, gen);
 
-    cout << "Complex vector in CP^" << dim << endl;
+    /*
+    cout << "Complex vector in CP^" << dim-1 << endl;
     for (int i = 0; i < dim; i++) {
         cout << setprecision(3) << z[i] << endl;
     }
     cout << "Norm: " << arma::norm(z) << endl;
-    
+    */
+
+    ofstream output("random.out");
+
+    //output << setw(7) << ""
+
     return 0;
 }
 
@@ -61,4 +70,15 @@ void random_qudit(arma::cx_vec &vec, default_random_engine gen){
     //multiply vec by global phase
 
     vec*=phase;
+}
+
+void qutrit_XYZ(arma::vec &angles, arma::cx_vec &cart){
+
+    //spherical coordinates
+    angles[0] = 2.*acos(abs(cart[0]));
+    angles[1] = 2.*atan2(abs(cart[2]), abs(cart[1]));
+
+    //phases
+    angles[2] = arg(cart[1]);
+    angles[3] = arg(cart[2]);
 }
