@@ -2,6 +2,11 @@ CC = g++
 CFLAGS = -O3 --std=c++23
 HEADERS = triangle.h
 
+all: main.x main2.x
+
+main2.x: main2.o triangle.o
+	$(CC) main2.o triangle.o -o main2.x $(CFLAGS)
+
 main.x: main.o triangle.o
 	$(CC) main.o triangle.o -o main.x $(CFLAGS)
 
