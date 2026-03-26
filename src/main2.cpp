@@ -1,0 +1,55 @@
+#include "triangle.h"
+#include <iostream>
+#include <fstream>
+#include <iomanip>
+#include <random>
+#include <vector>
+#include <armadillo>
+
+using namespace std;
+
+//generate a random qu-dit and save it inside vec using generator gen
+void random_qudit(arma::cx_vec, default_random_engine);
+
+int main(){
+    default_random_engine gen;
+
+    arma::cx_vec z(3);
+
+    return 0;
+}
+
+void random_qudit(arma::cx_vec vec, default_random_engine gen){
+
+    int dim = vec.size();
+
+    double rand_real;
+    double rand_im;
+
+    double norm=0;
+
+    normal_distribution<double> distr;
+
+    //generate complex numbers according to multivariate functions
+    for (int i = 0; i < dim; i++) {
+        
+        rand_real = distr(gen);
+        rand_im   = distr(gen);
+
+        vec[i] = rand_real + rand_im*I;
+
+        norm += rand_real*rand_real + rand_im*rand_im;
+    }
+
+    //renormalize
+    vec /= norm;
+
+    //compute global phase
+    complex<double> v0 = vec[0];
+
+    complex<double> phase = conj(v0)/abs(v0);
+
+    //multiply vec by global phase
+
+    vec*=phase;
+}
