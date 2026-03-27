@@ -9,7 +9,7 @@
 using namespace std;
 
 //generate a random qu-dit and save it inside vec using generator gen
-void random_qudit(arma::cx_vec&, default_random_engine);
+void random_qudit(arma::cx_vec&, default_random_engine&);
 
 //angle-phase coordinates of qutrit in angles expressed in cartesian coordinates in cart 
 void qutrit_XYZ(arma::vec&, arma::cx_vec);
@@ -17,19 +17,22 @@ void qutrit_XYZ(arma::vec&, arma::cx_vec);
 int main(){
     default_random_engine gen;
 
-    int dim = 3;
+    int n_points = 100000;
+    const int dim = 3;
     //state in cartesian coordinates
     arma::cx_vec z(dim);
     //state in angle-phase coordinates
     arma::vec angle_coords(2*(dim-1));
 
     //generate the random state, uniformly distributed on CP^n
-    random_qudit(z, gen);
+    //random_qudit(z, gen);
 
     //compute its angle-phase coordinates
-    qutrit_XYZ(angle_coords, z);
+    //qutrit_XYZ(angle_coords, z);
     
-    cout << "Complex vector in CP^" << dim-1 << endl;
+    /*
+    cout << "First vector generated: " << endl;
+    //cout << "Complex vector in CP^" << dim-1 << endl;
     for (int i = 0; i < dim; i++) {
         cout << setprecision(3) << z[i] << endl;
     }
@@ -39,15 +42,31 @@ int main(){
     for (int i = 0; i < angle_coords.size(); i++) {
         cout << setprecision(3) << angle_coords[i]/M_PI << "pi" << endl;
     }
-    
-    //ofstream output("random.out");
 
-    //output << setw(7) << ""
+    cout << "complexity: " << c_bar(angle_coords[0], angle_coords[1], angle_coords[2], angle_coords[3]) << endl;
+    */
+    
+    ofstream output("../output/random.out");
+
+    output << "n_points: " << setw(7) << n_points << endl
+           << setw(7) << "complexity" << endl;
+    
+    for (int i = 0; i < n_points; i++) {
+        //generate the random state, uniformly distributed on CP^n
+        random_qudit(z, gen);
+        //compute its angle-phase coordinates
+        qutrit_XYZ(angle_coords, z);
+        //compute complexity
+        double complexity = c_bar(angle_coords[0], angle_coords[1], angle_coords[2], angle_coords[3]);
+        output << setw(7) << complexity << endl;
+    }
+
+    output.close();
 
     return 0;
 }
 
-void random_qudit(arma::cx_vec &vec, default_random_engine gen){
+void random_qudit(arma::cx_vec &vec, default_random_engine &gen){
 
     int dim = vec.size();
 
