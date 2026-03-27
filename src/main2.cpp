@@ -18,19 +18,29 @@ int main(){
     default_random_engine gen;
 
     int dim = 3;
+    //state in cartesian coordinates
     arma::cx_vec z(dim);
+    //state in angle-phase coordinates
+    arma::vec angle_coords(2*(dim-1));
 
+    //generate the random state, uniformly distributed on CP^n
     random_qudit(z, gen);
 
-    /*
+    //compute its angle-phase coordinates
+    qutrit_XYZ(angle_coords, z);
+    
     cout << "Complex vector in CP^" << dim-1 << endl;
     for (int i = 0; i < dim; i++) {
         cout << setprecision(3) << z[i] << endl;
     }
     cout << "Norm: " << arma::norm(z) << endl;
-    */
 
-    ofstream output("random.out");
+    cout << "Angle-phase coordinates " << endl;
+    for (int i = 0; i < angle_coords.size(); i++) {
+        cout << setprecision(3) << angle_coords[i]/M_PI << "pi" << endl;
+    }
+    
+    //ofstream output("random.out");
 
     //output << setw(7) << ""
 
@@ -72,7 +82,7 @@ void random_qudit(arma::cx_vec &vec, default_random_engine gen){
     vec*=phase;
 }
 
-void qutrit_XYZ(arma::vec &angles, arma::cx_vec &cart){
+void qutrit_XYZ(arma::vec &angles, arma::cx_vec cart){
 
     //spherical coordinates
     angles[0] = 2.*acos(abs(cart[0]));
