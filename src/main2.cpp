@@ -11,6 +11,9 @@ using namespace std;
 //generate a random qu-dit and save it inside vec using generator gen
 void random_qudit(arma::cx_vec&, default_random_engine&);
 
+//angle-phase coordinates of qubit in angles expressed in cartesian coordinates in cart
+void qubit_XYZ(arma::vec&, arma::cx_vec);
+
 //angle-phase coordinates of qutrit in angles expressed in cartesian coordinates in cart 
 void qutrit_XYZ(arma::vec&, arma::cx_vec);
 
@@ -37,7 +40,7 @@ int main(){
         //generate the random state, uniformly distributed on CP^n
         random_qudit(z_qub, gen);
         //compute its angle-phase coordinates
-        qutrit_XYZ(angle_coords_qub, z_qub);
+        qubit_XYZ(angle_coords_qub, z_qub);
         //compute complexity
         double complexity = c_bar(angle_coords_qub[0], angle_coords_qub[1], 0., 0.);
         output << setw(7) << complexity << endl;
@@ -114,6 +117,14 @@ void random_qudit(arma::cx_vec &vec, default_random_engine &gen){
     //multiply vec by global phase
 
     vec*=phase;
+}
+
+void qubit_XYZ(arma::vec &angles, arma::cx_vec cart){
+    //spherical coordinate
+    angles[0] = 2.*acos(abs(cart[0]));
+
+    //phase
+    angles[1] = arg(cart[1]);
 }
 
 void qutrit_XYZ(arma::vec &angles, arma::cx_vec cart){
