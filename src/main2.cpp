@@ -17,12 +17,43 @@ void qutrit_XYZ(arma::vec&, arma::cx_vec);
 int main(){
     default_random_engine gen;
 
-    int n_points = 100000;
-    const int dim = 3;
+    int n_points = 1000000;
+    //*********************************************************
+    //******************* QUBIT *******************************
+    //*********************************************************
+
+    const int dim2 = 2;
     //state in cartesian coordinates
-    arma::cx_vec z(dim);
+    arma::cx_vec z_qub(dim2);
     //state in angle-phase coordinates
-    arma::vec angle_coords(2*(dim-1));
+    arma::vec angle_coords_qub(2*(dim2-1));
+
+    ofstream output("../output/qubit_rng.out");
+
+    output << "n_points: " << setw(7) << n_points << endl
+           << setw(7) << "complexity" << endl;
+
+        for (int i = 0; i < n_points; i++) {
+        //generate the random state, uniformly distributed on CP^n
+        random_qudit(z_qub, gen);
+        //compute its angle-phase coordinates
+        qutrit_XYZ(angle_coords_qub, z_qub);
+        //compute complexity
+        double complexity = c_bar(angle_coords_qub[0], angle_coords_qub[1], 0., 0.);
+        output << setw(7) << complexity << endl;
+    }
+
+    output.close();
+
+    //*********************************************************
+    //******************* QUTRIT ******************************
+    //*********************************************************
+
+    const int dim3 = 3;
+    //state in cartesian coordinates
+    arma::cx_vec z(dim3);
+    //state in angle-phase coordinates
+    arma::vec angle_coords(2*(dim3-1));
 
     //generate the random state, uniformly distributed on CP^n
     //random_qudit(z, gen);
@@ -30,23 +61,7 @@ int main(){
     //compute its angle-phase coordinates
     //qutrit_XYZ(angle_coords, z);
     
-    /*
-    cout << "First vector generated: " << endl;
-    //cout << "Complex vector in CP^" << dim-1 << endl;
-    for (int i = 0; i < dim; i++) {
-        cout << setprecision(3) << z[i] << endl;
-    }
-    cout << "Norm: " << arma::norm(z) << endl;
-
-    cout << "Angle-phase coordinates " << endl;
-    for (int i = 0; i < angle_coords.size(); i++) {
-        cout << setprecision(3) << angle_coords[i]/M_PI << "pi" << endl;
-    }
-
-    cout << "complexity: " << c_bar(angle_coords[0], angle_coords[1], angle_coords[2], angle_coords[3]) << endl;
-    */
-    
-    ofstream output("../output/random.out");
+    output.open("../output/qutrit_rng.out");
 
     output << "n_points: " << setw(7) << n_points << endl
            << setw(7) << "complexity" << endl;
@@ -56,8 +71,8 @@ int main(){
         random_qudit(z, gen);
         //compute its angle-phase coordinates
         qutrit_XYZ(angle_coords, z);
-        //compute complexity
-        double complexity = c_bar(angle_coords[0], angle_coords[1], angle_coords[2], angle_coords[3]);
+        //compute complexity (theta1, phi1, theta2, phi2)
+        double complexity = c_bar(angle_coords[0], angle_coords[2], angle_coords[1], angle_coords[3]);
         output << setw(7) << complexity << endl;
     }
 
