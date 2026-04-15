@@ -103,7 +103,7 @@ def circulant_ham(c, dim):
     return H
 
 #router as defined in AVS Quantum Sci. 5, 025001 (2023)
-def router(gamma=0, theta=0):
+def router(gamma=0., theta=0.):
     dim = 6
     H = np.zeros((dim,dim), dtype=complex)
 
