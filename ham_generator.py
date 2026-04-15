@@ -101,3 +101,23 @@ def circulant_ham(c, dim):
     H += c[0]*shift_matrix(dim, 0)
 
     return H
+
+#router as defined in AVS Quantum Sci. 5, 025001 (2023)
+def router(gamma=0, theta=0):
+    dim = 6
+    H = np.zeros((dim,dim), dtype=complex)
+
+    sub_H = circulant_ham((gamma, np.exp(theta/3.*1.j)), dim=3)
+
+    H[1:4,1:4] = sub_H.copy()
+
+    H[0,1] = 1
+    H[1,0] = 1
+
+    H[2,4] = 1
+    H[4,2] = 1
+
+    H[3,5] = 1
+    H[5,3] = 1
+    
+    return H
