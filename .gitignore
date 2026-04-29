@@ -4,6 +4,7 @@ krylov_gmpy2.py
 analysis.ipynb
 figures.ipynb
 *.pdf
+*.png
 output/*.out
 *.o
 *.x
