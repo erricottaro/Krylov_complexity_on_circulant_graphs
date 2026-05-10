@@ -6,6 +6,7 @@ figures.ipynb
 *.pdf
 *.png
 output/*.out
+*.ipynb
 *.o
 *.x
 __pycache__/
