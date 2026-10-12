@@ -53,6 +53,8 @@ Python >=3.10 is required, with packages:
 
 ## License
 
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+
 ## References
 
 [1] A. Bottarelli, M. Frigerio and MGA Paris, "[Quantum routing of information using chiral quantum walks](https://doi.org/10.1116/5.0146805)", *AVS Quantum Sci.*, 025001 (2023). 
