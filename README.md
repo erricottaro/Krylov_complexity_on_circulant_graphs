@@ -36,7 +36,7 @@ The routines in `krylov.py` perform Krylov reduction procedure and compute $\bar
 
 * `adjacency_matrix`: given a `NetworkX` graph `g`, returns its adjacency matrix, casted to a `nparray`.
 * `circulant_cycle`: returns a circulant complex adjacency matrix of a cycle graph of length `dim` with edge phase `phi`.
-* `circulant_ham`: returns an arbitrary `dim` $\times$ `dim` circulant Hamiltonian specified by the weights coefficients `c`. For consistency, it must hold `len(c)`$=$`int(dim/2)+1` and `c[0]` real. If `dim` is even, then `c[-1]` must be even as well. 
+* `circulant_ham`: returns an arbitrary `dim` $\times$ `dim` circulant Hamiltonian specified by the weights coefficients `c`. For consistency, it must hold `len(c)`$=$`int(dim/2)+1` and `c[0]` real. If `dim` is even, then `c[-1]` must be real as well. 
 
 * `router`: returns the Hamiltonian of the minimal quantum router, as defined in [1].
 
