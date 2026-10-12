@@ -10,7 +10,7 @@ $\ket{E_j}$ being the j-th energy level, and $|K_n\rangle$ being the n-th Krylov
 $$
 \begin{aligned}
 \ket{A_{n+1}} &:= \left ( \hat{H} - a_n \right ) |K_n\rangle - b_n |K_{n-1}\rangle, \\      
-    |K_{n+1}\rangle &:= (b_{n+1})^{-1}\ket{A_{n+1}},
+    |K_{n+1}\rangle &:= (b_{n+1})^{-1} | A_{n+1}\rangle,
 \end{aligned}
 $$
 The Lanczos coefficients are defined as $a_n := \bra{K_n}\hat{H}\ket{K_n}$, $b_n^2 := \braket{A_n|A_n}$, with $b_0=0$ and $\ket{K_0}:=\ket{\psi_0}$. The algorithm stops at $n=K$, when $b_n=0$ and $K$ is the dimension of the Krylov subspace. In the basis $\{\ket{K_n}\}$ the Hamiltonian is tridiagonal, with $a_n$ on the diagonal and $b_n$ the off-diagonals elements.
