@@ -7,7 +7,7 @@ $$
 $$
 
 $\ket{E_j}$ being the j-th energy level, and $|K_n\rangle$ being the n-th Krylov vector, defined by the Lanczos algorithm 
-$$
+```math
 \begin{aligned}
 \lvert A_{n+1}\rangle
 &:= (\hat{H}-a_n)\lvert K_n\rangle
@@ -15,7 +15,8 @@ $$
 \lvert K_{n+1}\rangle
 &:= (b_{n+1})^{-1}\lvert A_{n+1}\rangle.
 \end{aligned}
-$$
+```
+
 The Lanczos coefficients are defined as $a_n := \bra{K_n}\hat{H}\ket{K_n}$, $b_n^2 := \braket{A_n|A_n}$, with $b_0=0$ and $\ket{K_0}:=\ket{\psi_0}$. The algorithm stops at $n=K$, when $b_n=0$ and $K$ is the dimension of the Krylov subspace. In the basis $\{\ket{K_n}\}$ the Hamiltonian is tridiagonal, with $a_n$ on the diagonal and $b_n$ the off-diagonals elements.
 
 The code performs Krylov reduction by turning the original Hamiltonian in Hessenberg form and then reshaping it in order to include only the first non zero $b_n$'s. In order to discriminate between null and positive $b_n$'s, they are compared with a parameter $\epsilon$ set at run-time.
