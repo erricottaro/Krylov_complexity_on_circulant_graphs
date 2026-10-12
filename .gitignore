@@ -6,6 +6,8 @@ figures.ipynb
 *.pdf
 *.png
 output/*.out
+figures/
+src/
 *.ipynb
 *.o
 *.x
