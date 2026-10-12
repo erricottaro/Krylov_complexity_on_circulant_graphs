@@ -38,12 +38,21 @@ The routines in `krylov.py` perform Krylov reduction procedure and compute $\bar
 * `circulant_cycle`: returns a circulant complex adjacency matrix of a cycle graph of length `dim` with edge phase `phi`.
 * `circulant_ham`: returns an arbitrary `dim` $\times$ `dim` circulant Hamiltonian specified by the weights coefficients `c`. For consistency, it must hold `len(c)`$=$`int(dim/2)+1` and `c[0]` real. If `dim` is even, then `c[-1]` must be even as well. 
 
-* `router`: returns the Hamiltonian of the minimal quantum router, as defined in (add citation).
+* `router`: returns the Hamiltonian of the minimal quantum router, as defined in [1].
 
 ## Requirements
 
-## Installation
+Python >=3.10 is required, with packages:
+
+* `NumPy`
+
+* `Scipy.linalg`
+* `NetworkX`
 
 ## Citation
 
 ## License
+
+## References
+
+[1] A. Bottarelli, M. Frigerio and MGA Paris, "[Quantum routing of information using chiral quantum walks](https://doi.org/10.1116/5.0146805)", *AVS Quantum Sci.*, 025001 (2023). 
