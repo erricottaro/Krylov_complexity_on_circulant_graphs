@@ -8,10 +8,10 @@ $$
 
 $|K_n\rangle$ being the n-th Krylov vector, defined by the Lanczos algorithm 
 $$
-\begin{align}
+\begin{aligned}
 \ket{A_{n+1}} &:= \left ( \hat{H} - a_n \right ) |K_n\rangle - b_n |K_{n-1}\rangle, \\      
     |K_{n+1}\rangle &:= (b_{n+1})^{-1}\ket{A_{n+1}}.
-\begin{align}
+\begin{aligned}
 $$
 J
 ## Requirements
